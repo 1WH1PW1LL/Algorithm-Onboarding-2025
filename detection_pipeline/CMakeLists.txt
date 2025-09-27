@@ -17,6 +17,10 @@ add_executable(camera_publisher_node
   src/camera_publisher_node.cpp
 )
 
+add_executable(armor_detector_node
+  src/armor_detector_node.cpp
+)
+
 # Link libraries / dependencies
 ament_target_dependencies(camera_publisher_node
   rclcpp
@@ -24,8 +28,18 @@ ament_target_dependencies(camera_publisher_node
   cv_bridge
 )
 
+ament_target_dependencies(armor_detector_node
+  rclcpp
+  sensor_msgs
+  cv_bridge
+)
+
 target_link_libraries(camera_publisher_node
-    ${OpenCV_LIBS}
+  ${OpenCV_LIBS}
+)
+
+target_link_libraries(armor_detector_node
+  ${OpenCV_LIBS}
 )
 
 # Install executable
@@ -34,6 +48,11 @@ install(TARGETS
   DESTINATION lib/${PROJECT_NAME}
 )
 
+# Install launch files
+install(DIRECTORY
+  launch
+  DESTINATION share/${PROJECT_NAME}/
+)
+
 # Export package
 ament_package()
-
